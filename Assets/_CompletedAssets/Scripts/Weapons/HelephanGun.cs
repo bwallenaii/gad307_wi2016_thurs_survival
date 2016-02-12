@@ -1,12 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-
 namespace CompleteProject{
-	public class SpreadWeapon : Weapon {
+	public class HelephanGun : Weapon {
 
 		override protected void activateWeapon(){
-			PlayerWeaponManager.activateSpread(); //static function
+			PlayerWeaponManager.activateHelephantGun(); //static function
 		}
 	}
 }

@@ -15,7 +15,7 @@ namespace CompleteProject
         int floorMask;                      // A layer mask so that a ray can be cast just at gameobjects on the floor layer.
         float camRayLength = 100f;          // The length of the ray from the camera into the scene.
 #endif
-
+		private float turnMultiplier = 15f;
         void Awake ()
         {
 #if !MOBILE_INPUT
@@ -36,10 +36,17 @@ namespace CompleteProject
             float v = CrossPlatformInputManager.GetAxisRaw("Vertical");
 
             // Move the player around the scene.
-            Move (h, v);
+            
 
             // Turn the player to face the mouse cursor.
-            Turning ();
+			if(PlayerCameras.cameraName == PlayerCameras.CEILING_CAMERA){
+				Move (h, v);
+				Turning ();
+
+			} else {
+				FPMove();
+				FPTurning();
+			}
 
             // Animate the player.
             Animating (h, v);
@@ -63,6 +70,7 @@ namespace CompleteProject
         {
 #if !MOBILE_INPUT
             // Create a ray from the mouse cursor on screen in the direction of the camera.
+
             Ray camRay = Camera.main.ScreenPointToRay (Input.mousePosition);
 
             // Create a RaycastHit variable to store information about what was hit by the ray.
@@ -103,6 +111,19 @@ namespace CompleteProject
             }
 #endif
         }
+
+		void FPTurning(){
+			transform.Rotate(0, Input.GetAxis("Mouse X") * turnMultiplier, 0);
+		}
+
+		void FPMove(){
+			movement.Set(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+			movement = movement.normalized * speed * Time.deltaTime;
+
+			movement = transform.TransformDirection(movement);
+
+			playerRigidbody.MovePosition(transform.position + movement);
+		}
 
 
         void Animating (float h, float v)

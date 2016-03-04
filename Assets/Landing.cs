@@ -9,14 +9,21 @@ namespace CompleteProject{
 		public Button playBtn;
 		public Button quitBtn;
 
+		public Toggle spreadToggle;
+		public Toggle helephantGunToggle;
+
 		// Use this for initialization
 		void Awake () {
+			spreadToggle.isOn = SpreadWeapon.spreadInGame;
+			helephantGunToggle.isOn = HelephanGun.helephantGunInGame;
 
 			playBtn.GetComponent<Button> ().onClick.AddListener (() => {startGame();});
 			quitBtn.GetComponent<Button> ().onClick.AddListener (() => {quitGame();});
 		}
 
 		private void startGame(){
+			SpreadWeapon.spreadInGame = spreadToggle.isOn;
+			HelephanGun.helephantGunInGame = helephantGunToggle.isOn;
 			SceneManager.LoadScene (1);
 		}
 

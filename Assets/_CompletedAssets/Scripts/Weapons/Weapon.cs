@@ -4,15 +4,12 @@ using System.Collections;
 namespace CompleteProject{
 	public class Weapon : MonoBehaviour {
 
-		// Use this for initialization
-		void Start () {
-		
-		}
-		
+		protected bool inGame = true;
+
 		// Update is called once per frame
 		void Update () {
-			gameObject.GetComponent<MeshRenderer>().enabled = PlayerWeaponManager.canGetWeapon;
-			gameObject.GetComponent<CapsuleCollider>().enabled = PlayerWeaponManager.canGetWeapon;
+			gameObject.GetComponent<MeshRenderer>().enabled = PlayerWeaponManager.canGetWeapon && inGame;
+			gameObject.GetComponent<Collider>().enabled = PlayerWeaponManager.canGetWeapon && inGame;
 		}
 
 		void OnTriggerEnter(Collider col){

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 
@@ -12,9 +13,13 @@ namespace CompleteProject{
 		private const int HELEPHANT_GUN_DAMAGE = 450;
 		private const float HELEPHANT_GUN_ROF = 0.5f;
 
+		public static int numDecoys = 0;
 		public GameObject leftBarrel;
 		public GameObject centerBarrel;
 		public GameObject rightBarrel;
+		public GameObject decoy;
+		public Text numDecoyOutput;
+
 
 		private PlayerShooting leftShot;
 		private PlayerShooting centerShot;
@@ -25,6 +30,7 @@ namespace CompleteProject{
 
 		// Use this for initialization
 		void Awake () {
+			Decoy.clearDecoys();
 			player = this;
 
 			leftShot = leftBarrel.GetComponent<PlayerShooting>();
@@ -36,10 +42,18 @@ namespace CompleteProject{
 		
 		// Update is called once per frame
 		void Update () {
+			numDecoyOutput.text = numDecoys.ToString();
 			if(!canGetWeapon){
 				weaponTime -= Time.deltaTime;
 			} else{
 				resetWeapon();
+			}
+
+			if(Input.GetButtonDown("Fire2") && numDecoys > 0){
+				numDecoys--;
+				Instantiate(decoy, 
+					new Vector3(transform.position.x, 1, transform.position.z), 
+					transform.rotation);
 			}
 		}
 

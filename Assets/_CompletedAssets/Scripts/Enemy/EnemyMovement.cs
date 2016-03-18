@@ -31,12 +31,15 @@ namespace CompleteProject
 			if(enemyHealth.currentHealth > 0 && playerHealth.currentHealth > 0)
 			{
 				// ... set the destination of the nav mesh agent to the player.
-				//nav.SetDestination (player.position);
-
+				Vector3 closestDecoy = Decoy.closestDecoy(transform.position);
+				float decoyDistance = Vector3.Distance(transform.position, closestDecoy);
 				float playerDistance = Vector3.Distance(transform.position, player.position); //get my distance from player
 
 				//check if can hear player
-				if((playerDistance < hearingDistance) || (Input.GetButton ("Fire1") && playerDistance < loudHearingDistance)){
+				if(decoyDistance < loudHearingDistance){
+					targetLocation = closestDecoy;
+				}
+				else if((playerDistance < hearingDistance) || (Input.GetButton ("Fire1") && playerDistance < loudHearingDistance)){
 					targetLocation = player.position; //CHARGE!!!
 				} else if(Vector3.Distance(transform.position, targetLocation) <= 1 ){//check if need new position
 					randomLocation();//get a new random location

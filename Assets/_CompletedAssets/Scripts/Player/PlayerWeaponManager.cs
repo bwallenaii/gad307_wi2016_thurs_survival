@@ -36,7 +36,7 @@ namespace CompleteProject{
 			leftShot = leftBarrel.GetComponent<PlayerShooting>();
 			centerShot = centerBarrel.GetComponent<PlayerShooting>();
 			rightShot = rightBarrel.GetComponent<PlayerShooting>();
-
+			weaponTime = 0;
 			resetWeapon();
 		}
 		
@@ -67,6 +67,9 @@ namespace CompleteProject{
 
 			centerShot.damagePerShot = NORMAL_DAMAGE;
 			centerShot.timeBetweenBullets = NORMAL_ROF;
+
+			leftShot.DisableEffects ();
+			rightShot.DisableEffects ();
 		}
 
 		public static void activateSpread(){
